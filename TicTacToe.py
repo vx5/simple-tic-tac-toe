@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# Simple Tic-Tac-Toe program
+
 # Initializes board variable
 board = [" "] * 9
 # Initializes instruction board
