@@ -8,7 +8,6 @@ charMap = {'O':'O', 'X':'X'}
 keys = list(charMap.keys())
 curPlayer = 0
 # All messages to be printed to user
-turnBreakLine = '============================'
 welcomeMsg = 'Welcome to Tic Tac Toe!'
 boardMsg = 'Here\'s the board:'
 turnMsg = lambda curPlayer: f"It is player {curPlayer + 1} ({keys[curPlayer]})'s turn"
