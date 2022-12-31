@@ -13,7 +13,8 @@ class TicTacToeBoard:
 
     def __init__(self):
         self.tokens_placed = 0
-        self.board = [None for idx in range(BOARD_DIMENSION)] * BOARD_DIMENSION
+        self.board = [[None for _ in range(
+            BOARD_DIMENSION)] for _ in range(BOARD_DIMENSION)]
         """
         Initializes each board position with a number (top row 1-2-3,
         next row 4-5-6, last 7-8-9 if BOARD_DIMENSION is 3).
@@ -37,25 +38,27 @@ class TicTacToeBoard:
         Places given player token on the board in a position (if possible)
         and returns an EntryResponse depending on the outcome of attempting
         to place the token.
+
+        row and col are in [0, BOARD_DIMENSION]
         """
         # Check whether given coordinates are on the board
         if not (0 <= row < BOARD_DIMENSION and 0 <= col < BOARD_DIMENSION):
             return EntryResponse.INVALID_ENTRY_INVALID_LOCATION
         # Check whether given coordinates are already taken by a player token
-        if isinstance(self.board[row][col], PlayerToken):
+        if self.board[row][col] in [token.value for token in list(PlayerToken)]:
             return EntryResponse.INVALID_ENTRY_SPOT_TAKEN
         # Place token on the board at the specified location
-        self.board[row][col] = token
+        self.board[row][col] = token.value
         """
         Note which possible solutions this location helps -- if any solutions
         have been fulfilled, return victory response
         """
         # Check for the rows and cols along which this location lies
-        row_solution_position = SolutionPosition[f'Row_{row}']
+        row_solution_position = SolutionPosition(f'Row_{row}')
         self.player_and_solution_to_num_tokens[token][row_solution_position] += 1
         if self.player_and_solution_to_num_tokens[token][row_solution_position] == BOARD_DIMENSION:
             return EntryResponse.VICTORY
-        col_solution_position = SolutionPosition[f'Col_{col}']
+        col_solution_position = SolutionPosition(f'Col_{col}')
         self.player_and_solution_to_num_tokens[token][col_solution_position] += 1
         if self.player_and_solution_to_num_tokens[token][col_solution_position] == BOARD_DIMENSION:
             return EntryResponse.VICTORY
@@ -82,13 +85,13 @@ class TicTacToeBoard:
         final_str = ''
         for row in range(BOARD_DIMENSION):
             for col in range(BOARD_DIMENSION):
-                final_str += self.board[row][col]
+                final_str += str(self.board[row][col])
                 # If this is not the last item in a row, add a divider
                 if col < BOARD_DIMENSION - 1:
                     final_str += ' | '
             # If we are about to traverse a new row, add a row divider
             if row < BOARD_DIMENSION - 1:
-                final_str += ('--+-' * BOARD_DIMENSION) + '-'
+                final_str += '\n' + ('--+-' * (BOARD_DIMENSION - 1)) + '-\n'
         return final_str
 
 
@@ -106,15 +109,24 @@ while True:
     # Handle responses
     try:
         entry = int(input(ENTER_MSG))
+        print(entry)
     except:
+        # Default is an error value
         entry = (BOARD_DIMENSION ** 2) + 1
     # The user entry is 1-indexed, but the board is 0-indexed
     entry -= 1
-    row = entry // BOARD_DIMENSION
-    col = entry % BOARD_DIMENSION
-    response = board.place_token(row, col, PLAYER_CHARS[cur_player])
+    chosen_row = entry // BOARD_DIMENSION
+    chosen_col = entry % BOARD_DIMENSION
+    response = board.place_token(
+        chosen_row, chosen_col, PLAYER_CHARS[cur_player])
     if response == EntryResponse.ACCEPTED_ENTRY_GAME_NOT_OVER:
         cur_player = switch_player(cur_player)
+        continue
+    if response == EntryResponse.INVALID_ENTRY_INVALID_LOCATION:
+        print('\n' + INVALID_IDX_MSG + '\n')
+        continue
+    if response == EntryResponse.INVALID_ENTRY_SPOT_TAKEN:
+        print('\n' + TAKEN_MSG + '\n')
         continue
     if response == EntryResponse.VICTORY:
         print(victory_msg(cur_player) + '\n')
@@ -124,4 +136,4 @@ while True:
     break
 
 # Final game-ending message
-print(END_MSG + '\n')
+print(END_MSG)

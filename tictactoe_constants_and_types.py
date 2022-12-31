@@ -15,8 +15,11 @@ class Player(Enum):
     PLAYER_2 = 'Player 2'
 
 
-def switch_player(player: Player):
-    return
+def switch_player(player: Player) -> Player:
+    """
+    Switch from one player to the other.
+    """
+    return Player.PLAYER_1 if player == Player.PLAYER_2 else Player.PLAYER_2
 
 
 class PlayerToken(Enum):
@@ -55,18 +58,15 @@ STALEMAGE_MSG = 'Game ends in stalemate!'
 TAKEN_MSG = 'That position is taken -- please try again'
 ENTER_MSG = 'Enter a position (# on board) to play:'
 END_MSG = 'Thank you for playing!'
+INVALID_IDX_MSG = f'Please enter an integer between 1 and {BOARD_DIMENSION ** 2}'
 
 
 def turn_msg(cur_player: Player) -> str:
     return f"It is {cur_player.value}'s turn"
 
 
-def victory_msg(cur_player_num: int) -> str:
-    return f"Player {cur_player_num + 1} ({PLAYER_CHARS[cur_player_num]}) wins"
-
-
-def invalid_idx_msg() -> str:
-    return f"Please enter an integer between 1 and {BOARD_DIMENSION ** 2}"
+def victory_msg(cur_player: Player) -> str:
+    return f"Player {cur_player.value} ({PLAYER_CHARS[cur_player]}) wins"
 
 
 # Creates an Enum that represents each possible solution location on the board
