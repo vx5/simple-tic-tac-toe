@@ -53,8 +53,6 @@ def printCurBoard():
 # - 'invalid player' if playerChar indicated is not valid
 def playMove(playerChar, idx):
 	global movesMade
-	# Check for playerChar
-	if playerChar not in (oneChar, twoChar): return 'invalid player'
 	# Adjust index from 1-idx (shown to user) to 0-idx (used for accessing state)
 	idx -= 1
 	# Check for valid idx or taken position
