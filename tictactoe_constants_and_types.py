@@ -42,7 +42,7 @@ class EntryResponse(Enum):
     INVALID_ENTRY_INVALID_LOCATION = "Entry invalid because chosen location is not on the board"
 
 
-# CONSTANTS
+# Constants
 
 
 # Overall number of rows

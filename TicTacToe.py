@@ -39,7 +39,12 @@ class TicTacToeBoard:
         and returns an EntryResponse depending on the outcome of attempting
         to place the token.
 
-        row and col are in [0, BOARD_DIMENSION]
+        INPUTS:
+        row in inclusive range 0 to BOARD_DIMENSION (int) [row]
+        col in inclusive range 0 to BOARD_DIMENSION (int) [col]
+        token to be placed on the board (PlayerToken) [token]
+        OUTPUT:
+        info about attempt to place token in the given location (EntryResponse)
         """
         # Check whether given coordinates are on the board
         if not (0 <= row < BOARD_DIMENSION and 0 <= col < BOARD_DIMENSION):
@@ -97,7 +102,7 @@ class TicTacToeBoard:
 
 # User interaction section
 
-# Print initial welcome message
+# Print initial welcome message and initialize
 print('\n' + WELCOME_MSG + '\n')
 board = TicTacToeBoard()
 cur_player = Player.PLAYER_1
@@ -128,6 +133,7 @@ while True:
     if response == EntryResponse.INVALID_ENTRY_SPOT_TAKEN:
         print('\n' + TAKEN_MSG + '\n')
         continue
+    # If victory or stalemate, reprint the board and exit
     if response == EntryResponse.VICTORY:
         print(victory_msg(cur_player) + '\n')
     if response == EntryResponse.STALEMATE:
@@ -135,5 +141,5 @@ while True:
     print(board.to_string() + '\n')
     break
 
-# Final game-ending message
+# Final message for end of game
 print(END_MSG)
