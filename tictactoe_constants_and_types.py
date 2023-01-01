@@ -62,11 +62,11 @@ INVALID_IDX_MSG = f'Please enter an integer between 1 and {BOARD_DIMENSION ** 2}
 
 
 def turn_msg(cur_player: Player) -> str:
-    return f"It is {cur_player.value}'s turn"
+    return f"It is {cur_player.value}'s turn -- token is {PLAYER_CHARS[cur_player].value}"
 
 
 def victory_msg(cur_player: Player) -> str:
-    return f"Player {cur_player.value} ({PLAYER_CHARS[cur_player]}) wins"
+    return f"{cur_player.value} ({PLAYER_CHARS[cur_player].value}) wins"
 
 
 # Creates an Enum that represents each possible solution location on the board

@@ -108,13 +108,12 @@ board = TicTacToeBoard()
 cur_player = Player.PLAYER_1
 while True:
     # Shows current board and asks for input
-    print(BOARD_MSG + '\n')
+    print('\n' + BOARD_MSG + '\n')
     print(board.to_string())
     print('\n' + turn_msg(cur_player) + '\n')
     # Handle responses
     try:
         entry = int(input(ENTER_MSG))
-        print(entry)
     except:
         # Default is an error value
         entry = (BOARD_DIMENSION ** 2) + 1
@@ -135,11 +134,11 @@ while True:
         continue
     # If victory or stalemate, reprint the board and exit
     if response == EntryResponse.VICTORY:
-        print(victory_msg(cur_player) + '\n')
+        print('\n' + victory_msg(cur_player) + '\n')
     if response == EntryResponse.STALEMATE:
-        print(STALEMAGE_MSG + '\n')
+        print('\n' + STALEMAGE_MSG + '\n')
     print(board.to_string() + '\n')
     break
 
 # Final message for end of game
-print(END_MSG)
+print(END_MSG + '\n')
