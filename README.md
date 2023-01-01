@@ -20,4 +20,4 @@ Users can then use integer inputs to select positions on the board, per the game
 
 #### Design details
 
-The core logic of the game itself is in the game_logic module, while tictactoe.py handles user interactions. Both modules were designed with some degree of modularity, so that they can accommodate potential changes (e.g., different characters to represent players, different board sizes), with some modification.
+Program is designed to accommodate potential changes (e.g., different characters to represent players, different board sizes), with some modification.
