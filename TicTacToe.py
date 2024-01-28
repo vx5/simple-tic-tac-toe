@@ -15,18 +15,18 @@ class TicTacToeBoard:
         self.tokens_placed = 0
         self.board = [[None for _ in range(
             BOARD_DIMENSION)] for _ in range(BOARD_DIMENSION)]
-        """
-        Initializes each board position with a number (top row 1-2-3,
-        next row 4-5-6, last 7-8-9 if BOARD_DIMENSION is 3).
-        """
+        
+        # Initializes each board position with a number (top row 1-2-3,
+        # next row 4-5-6, last 7-8-9 if BOARD_DIMENSION is 3).
+        
         for row in range(BOARD_DIMENSION):
             for col in range(BOARD_DIMENSION):
                 self.board[row][col] = (row * BOARD_DIMENSION) + col + 1
-        """
-        Initialize dict that will track how many tokens each player has
-        placed along possible solutions. Intentionally not using defaultdict
-        to ensure that the dict rigidly expects a Player and a SolutionPosition.
-        """
+        
+        # Initialize dict that will track how many tokens each player has
+        # placed along possible solutions. Intentionally not using defaultdict
+        # to ensure that the dict rigidly expects a Player and a SolutionPosition.
+        
         self.player_and_solution_to_num_tokens = {}
         for player_token in list(PlayerToken):
             self.player_and_solution_to_num_tokens[player_token] = {}
@@ -54,10 +54,12 @@ class TicTacToeBoard:
             return EntryResponse.INVALID_ENTRY_SPOT_TAKEN
         # Place token on the board at the specified location
         self.board[row][col] = token.value
-        """
-        Note which possible solutions this location helps -- if any solutions
-        have been fulfilled, return victory response
-        """
+        
+        
+        # Note which possible solutions this location helps -- if any solutions
+        # have been fulfilled, return victory response
+        
+
         # Check for the rows and cols along which this location lies
         row_solution_position = SolutionPosition(f'Row_{row}')
         self.player_and_solution_to_num_tokens[token][row_solution_position] += 1
@@ -123,19 +125,19 @@ while True:
     chosen_col = entry % BOARD_DIMENSION
     response = board.place_token(
         chosen_row, chosen_col, PLAYER_CHARS[cur_player])
-    if response == EntryResponse.ACCEPTED_ENTRY_GAME_NOT_OVER:
+    if response is EntryResponse.ACCEPTED_ENTRY_GAME_NOT_OVER:
         cur_player = switch_player(cur_player)
         continue
-    if response == EntryResponse.INVALID_ENTRY_INVALID_LOCATION:
+    if response is EntryResponse.INVALID_ENTRY_INVALID_LOCATION:
         print('\n' + INVALID_IDX_MSG + '\n')
         continue
-    if response == EntryResponse.INVALID_ENTRY_SPOT_TAKEN:
+    if response is EntryResponse.INVALID_ENTRY_SPOT_TAKEN:
         print('\n' + TAKEN_MSG + '\n')
         continue
     # If victory or stalemate, reprint the board and exit
-    if response == EntryResponse.VICTORY:
+    if response is EntryResponse.VICTORY:
         print('\n' + victory_msg(cur_player) + '\n')
-    if response == EntryResponse.STALEMATE:
+    if response is EntryResponse.STALEMATE:
         print('\n' + STALEMAGE_MSG + '\n')
     print(board.to_string() + '\n')
     break
